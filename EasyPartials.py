@@ -29,15 +29,15 @@ def main():
     # Loading required data from totals spreadsheet
 
     wb = load_workbook(ORIGINAL_INPUT)
-    sheet = wb['Sheet1']
+    partial_sheet = wb['Sheet1']
 
     # Deleting the first row which contains headers for the columns
-    sheet.delete_rows(1, 1)
+    partial_sheet.delete_rows(1, 1)
 
-    location_codes = sheet["A"]
-    products = sheet["B"]
-    actual_quantity = sheet["D"]
-    handling_unit = sheet["G"]
+    location_codes = partial_sheet["A"]
+    products = partial_sheet["B"]
+    actual_quantity = partial_sheet["D"]
+    handling_unit = partial_sheet["G"]
 
     partials_list = []
 
@@ -48,46 +48,46 @@ def main():
             partials_list.append(
                 [location_codes[i].value, products[i].value, handling_unit[i].value, actual_quantity[i].value])
 
-    out_book = Workbook()
+    partial_out_book = Workbook()
 
-    out_sheet = out_book.active
+    partial_out_sheet = partial_out_book.active
 
     aisle_number = location_codes[0].value.split("-")[0]
     OUTPUT_FILENAME = "Aisle-" + aisle_number + "-partials" + ".xlsx"
 
     # Setting Up headers for the spreadsheet
-    out_sheet["A1"] = "Storage Bin"
-    out_sheet.column_dimensions['A'].width = 12
-    out_sheet.row_dimensions[1].height = 25
+    partial_out_sheet["A1"] = "Storage Bin"
+    partial_out_sheet.column_dimensions['A'].width = 12
+    partial_out_sheet.row_dimensions[1].height = 25
 
-    out_sheet["B1"] = "Product"
-    out_sheet.column_dimensions['B'].width = 12
+    partial_out_sheet["B1"] = "Product"
+    partial_out_sheet.column_dimensions['B'].width = 12
 
-    out_sheet["C1"] = "Handling Unit"
-    out_sheet.column_dimensions['C'].width = 20
+    partial_out_sheet["C1"] = "Handling Unit"
+    partial_out_sheet.column_dimensions['C'].width = 20
 
-    out_sheet["D1"] = "Quantity"
-    out_sheet.column_dimensions['D'].width = 9
+    partial_out_sheet["D1"] = "Quantity"
+    partial_out_sheet.column_dimensions['D'].width = 9
 
     for count, partial in enumerate(partials_list, start=2):
-        out_sheet["A" + str(count)] = partial[0]
-        out_sheet["B" + str(count)] = partial[1]
-        out_sheet["C" + str(count)] = partial[2]
-        out_sheet["D" + str(count)] = partial[3]
+        partial_out_sheet["A" + str(count)] = partial[0]
+        partial_out_sheet["B" + str(count)] = partial[1]
+        partial_out_sheet["C" + str(count)] = partial[2]
+        partial_out_sheet["D" + str(count)] = partial[3]
 
-    for cell in out_sheet['A:A']:
+    for cell in partial_out_sheet['A:A']:
         cell.alignment = Alignment(horizontal="center", vertical="center")
 
-    for cell in out_sheet['B:B']:
+    for cell in partial_out_sheet['B:B']:
         cell.alignment = Alignment(horizontal="center", vertical="center")
 
-    for cell in out_sheet['C:C']:
+    for cell in partial_out_sheet['C:C']:
         cell.alignment = Alignment(horizontal="center", vertical="center")
 
-    for cell in out_sheet['D:D']:
+    for cell in partial_out_sheet['D:D']:
         cell.alignment = Alignment(horizontal="center", vertical="center")
 
-    out_book.save(OUTPUT_FILENAME)
+    partial_out_book.save(OUTPUT_FILENAME)
     # os.remove(ORIGINAL_INPUT)
 
 
