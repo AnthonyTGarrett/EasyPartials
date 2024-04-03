@@ -42,14 +42,19 @@ def main():
 
     # Loop through actual_quantity list to compare actual quantity to total pallet quantity
     # of the specified product from data_products_dict
-
     for i in range(len(actual_quantity)):
         if actual_quantity[i].value < data_products_dict[int(products[i].value)]:
             partials_list.append(
                 [location_codes[i].value, products[i].value, handling_unit[i].value, actual_quantity[i].value])
 
-    # for partial in partials_list:
-    #     print(partial)
+    out_book = Workbook()
+    out_sheet = out_book.active
+
+    aisle_number = location_codes[0].value.split("-")[0]
+    OUTPUT_FILENAME = "Aisle-" + aisle_number + "-partials" + ".xlsx"
+
+    for partial in partials_list:
+
 
 
 if __name__ == "__main__":
