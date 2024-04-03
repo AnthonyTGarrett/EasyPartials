@@ -53,7 +53,7 @@ def main():
     partial_out_sheet = partial_out_book.active
 
     aisle_number = location_codes[0].value.split("-")[0]
-    OUTPUT_FILENAME = "Aisle-" + aisle_number + "-partials" + ".xlsx"
+    PARTIAL_OUTPUT_FILENAME = "Aisle-" + aisle_number + "-partials" + ".xlsx"
 
     # Setting Up headers for the spreadsheet
     partial_out_sheet["A1"] = "Storage Bin"
@@ -87,7 +87,7 @@ def main():
     for cell in partial_out_sheet['D:D']:
         cell.alignment = Alignment(horizontal="center", vertical="center")
 
-    partial_out_book.save(OUTPUT_FILENAME)
+    partial_out_book.save(PARTIAL_OUTPUT_FILENAME)
     # os.remove(ORIGINAL_INPUT)
 
 
