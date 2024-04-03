@@ -53,8 +53,22 @@ def main():
     aisle_number = location_codes[0].value.split("-")[0]
     OUTPUT_FILENAME = "Aisle-" + aisle_number + "-partials" + ".xlsx"
 
-    for partial in partials_list:
+    partial = ['15-101-A', '11007639', '376130426105723', 84]
 
+    # Setting Up headers for the spreadsheet
+    out_sheet["A" + str(1)] = "Storage Bin"
+    out_sheet["B" + str(1)] = "Product"
+    out_sheet["C" + str(1)] = "Handling Unit"
+    out_sheet["D" + str(1)] = "Quantity"
+
+    for count, partial in enumerate(partials_list, start=2):
+        out_sheet["A" + str(count)] = partial[0]
+        out_sheet["B" + str(count)] = partial[1]
+        out_sheet["C" + str(count)] = partial[2]
+        out_sheet["D" + str(count)] = partial[3]
+
+    out_book.save(OUTPUT_FILENAME)
+    # os.remove(ORIGINAL_INPUT)
 
 
 if __name__ == "__main__":
