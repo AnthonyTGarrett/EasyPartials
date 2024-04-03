@@ -49,6 +49,7 @@ def main():
                 [location_codes[i].value, products[i].value, handling_unit[i].value, actual_quantity[i].value])
 
     out_book = Workbook()
+
     out_sheet = out_book.active
 
     aisle_number = location_codes[0].value.split("-")[0]
@@ -56,19 +57,16 @@ def main():
 
     # Setting Up headers for the spreadsheet
     out_sheet["A1"] = "Storage Bin"
-    out_sheet["A1"].alignment = Alignment(horizontal="center")
     out_sheet.column_dimensions['A'].width = 12
+    out_sheet.row_dimensions[1].height = 25
 
     out_sheet["B1"] = "Product"
-    out_sheet["B1"].alignment = Alignment(horizontal="center")
     out_sheet.column_dimensions['B'].width = 12
 
     out_sheet["C1"] = "Handling Unit"
-    out_sheet["C1"].alignment = Alignment(horizontal="center")
     out_sheet.column_dimensions['C'].width = 20
 
     out_sheet["D1"] = "Quantity"
-    out_sheet["D1"].alignment = Alignment(horizontal="center")
     out_sheet.column_dimensions['D'].width = 9
 
     for count, partial in enumerate(partials_list, start=2):
@@ -76,6 +74,18 @@ def main():
         out_sheet["B" + str(count)] = partial[1]
         out_sheet["C" + str(count)] = partial[2]
         out_sheet["D" + str(count)] = partial[3]
+
+    for cell in out_sheet['A:A']:
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    for cell in out_sheet['B:B']:
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    for cell in out_sheet['C:C']:
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+
+    for cell in out_sheet['D:D']:
+        cell.alignment = Alignment(horizontal="center", vertical="center")
 
     out_book.save(OUTPUT_FILENAME)
     # os.remove(ORIGINAL_INPUT)
