@@ -6,6 +6,7 @@
 #
 import os
 from openpyxl import Workbook, load_workbook
+from openpyxl.styles import Alignment
 
 ORIGINAL_INPUT = "EXPORT.XLSX"
 DATA_INPUT = "products.xlsx"
@@ -53,13 +54,22 @@ def main():
     aisle_number = location_codes[0].value.split("-")[0]
     OUTPUT_FILENAME = "Aisle-" + aisle_number + "-partials" + ".xlsx"
 
-    partial = ['15-101-A', '11007639', '376130426105723', 84]
-
     # Setting Up headers for the spreadsheet
-    out_sheet["A" + str(1)] = "Storage Bin"
-    out_sheet["B" + str(1)] = "Product"
-    out_sheet["C" + str(1)] = "Handling Unit"
-    out_sheet["D" + str(1)] = "Quantity"
+    out_sheet["A1"] = "Storage Bin"
+    out_sheet["A1"].alignment = Alignment(horizontal="center")
+    out_sheet.column_dimensions['A'].width = 12
+
+    out_sheet["B1"] = "Product"
+    out_sheet["B1"].alignment = Alignment(horizontal="center")
+    out_sheet.column_dimensions['B'].width = 12
+
+    out_sheet["C1"] = "Handling Unit"
+    out_sheet["C1"].alignment = Alignment(horizontal="center")
+    out_sheet.column_dimensions['C'].width = 20
+
+    out_sheet["D1"] = "Quantity"
+    out_sheet["D1"].alignment = Alignment(horizontal="center")
+    out_sheet.column_dimensions['D'].width = 9
 
     for count, partial in enumerate(partials_list, start=2):
         out_sheet["A" + str(count)] = partial[0]
